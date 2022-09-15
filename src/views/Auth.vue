@@ -35,7 +35,7 @@ export default {
 .background {
   width: 100%;
   height: calc(100vh);
-  background: url('../assets/auth-background.jpg') no-repeat;
+  background-image: url('../assets/auth-background.jpg');
   background-size: cover;
   z-index: -1;
 }

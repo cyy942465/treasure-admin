@@ -36,7 +36,7 @@ export default {
       },
       rules: {
         userEmail: [
-          { type: 'email', required: true, message: '请输入正确的邮箱账号', trigger: 'blur' }
+          // { type: 'email', required: true, message: '请输入正确的邮箱账号', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur'},
@@ -50,16 +50,29 @@ export default {
       this.$emit('toggle-register', 'register');
     },
     submitForm(form) {
-      this.$refs[form].validate((valid) => {
+      this.$refs[form].validate(async (valid) => {
         if (valid) {
+          const actionsPayload = {
+            username: this.formLabelAlign.userEmail,
+            password: this.formLabelAlign.password
+          };
           // 提交请求
-          
+          await this.$store.dispatch('userLogin', actionsPayload);
+          // console.log(this.$store.getters['token']);
+          // 页面跳转
+          if (this.$store.getters['token']) {
+            // 有token登录成功，页面跳转
+            this.$router.push('/Home');
+          } else {
+            // 没有token，登录失败
+            this.$message({
+              showClose: true,
+              type: 'error',
+              message: '密码错误或账号不存在，请重新输入'
+            })
+          }
+
         } else {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            message: '密码错误或账号不存在，请重新输入'
-          })
           return ;
         }
       })

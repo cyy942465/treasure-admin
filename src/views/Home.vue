@@ -4,7 +4,7 @@
       <the-header></the-header>
     </el-header>
     <el-container>
-      <el-aside>
+      <el-aside class="aside">
         <the-aside></the-aside>
       </el-aside>
       <el-main>

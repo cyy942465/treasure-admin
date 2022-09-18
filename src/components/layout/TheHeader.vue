@@ -5,9 +5,12 @@
       <p>Treasure</p>
     </div>
     <div class="selection-container">
-      <el-dropdown trigger="click">
-        <i class="el-icon-user" style="margin-right: 15px"></i>
+      <el-dropdown trigger="hover">
+        <span class="el-dropdown-link">
+          我的账号<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
         <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>账号信息</el-dropdown-item>
           <el-dropdown-item>退出登录</el-dropdown-item>
           <el-dropdown-item>注销账号</el-dropdown-item>
         </el-dropdown-menu>
@@ -29,22 +32,17 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2em
+  padding: 0 3em
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
-
-.selection-container {
-  padding-right: 3em;
-}
-
-.el-icon-user {
-  inherits: inherit;
-  font-size: 2em;
+.el-dropdown-link {
+    cursor: pointer;
 }
 
 img {

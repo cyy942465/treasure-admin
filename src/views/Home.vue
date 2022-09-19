@@ -8,6 +8,7 @@
         <the-aside></the-aside>
       </el-aside>
       <el-main>
+        
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -29,7 +30,7 @@ export default {
 
 <style scoped>
 .header {
-  height: 5em;
+  height: 9vh;
   width: 100%;
   display: flex;
   justify-content: center;

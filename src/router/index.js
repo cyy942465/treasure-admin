@@ -28,12 +28,37 @@ const routes = [
       {
         path: 'Users', // /Home/Users
         name: 'Users',
-        component: () => import('../components/Users.vue')
+        component: () => import('../components/account/Users.vue')
       },
       {
         path: 'Admins', // /Home/Admins
         name: 'Admins',
-        component: () => import('../components/Admins.vue')
+        component: () => import('../components/account/Admins.vue')
+      },
+      {
+        path: 'Orders', // /Home/Orders
+        name: 'Orders',
+        component: () => import('../components/app/Orders.vue')
+      },
+      {
+        path: 'Goods', // /Home/Goods
+        name: 'Goods',
+        component: () => import('../components/app/Goods.vue')
+      },
+      {
+        path: 'Articles', // /Home/Articles
+        name: 'Articles',
+        component: () => import('../components/app/Articles.vue')
+      },
+      {
+        path: 'Map', // /Home/Map
+        name: 'Map',
+        component: () => import('../components/maps/Map.vue')
+      },
+      {
+        path: 'Points', // /Home/Points
+        name: 'Points',
+        component: () => import('../components/maps/Points.vue')
       }
     ]
   }

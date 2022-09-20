@@ -62,7 +62,7 @@ export default {
           // 页面跳转
           if (this.$store.getters['token']) {
             // 有token登录成功，页面跳转
-            this.$router.push('/Home');
+            this.$router.push('/Main');
           } else {
             // 没有token，登录失败
             this.$message({

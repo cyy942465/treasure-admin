@@ -21,43 +21,53 @@ const routes = [
     ]
   },
   {
-    path: '/Home',
-    name: 'Home',
-    component: () => import('../views/Home.vue'),
+    path: '/Main',
+    name: 'Main',
+    component: () => import('../views/Main.vue'),
     children: [
       {
-        path: 'Users', // /Home/Users
-        name: 'Users',
+        path: 'Home', // /Main/Home
+        name: '主页',
+        component: () => import('../components/home/Home.vue')
+      },
+      {
+        path: 'Data', // /Main/Data
+        name: '流量监控',
+        component: () => import('../components/data/Data.vue')
+      },
+      {
+        path: 'Users', // /Main/Users
+        name: '用户账号',
         component: () => import('../components/account/Users.vue')
       },
       {
-        path: 'Admins', // /Home/Admins
-        name: 'Admins',
+        path: 'Admins', // /Main/Admins
+        name: '管理账号',
         component: () => import('../components/account/Admins.vue')
       },
       {
-        path: 'Orders', // /Home/Orders
-        name: 'Orders',
+        path: 'Orders', // /Main/Orders
+        name: '订单管理',
         component: () => import('../components/app/Orders.vue')
       },
       {
-        path: 'Goods', // /Home/Goods
-        name: 'Goods',
+        path: 'Goods', // /Main/Goods
+        name: '商品管理',
         component: () => import('../components/app/Goods.vue')
       },
       {
-        path: 'Articles', // /Home/Articles
-        name: 'Articles',
+        path: 'Articles', // /Main/Articles
+        name: '文章管理',
         component: () => import('../components/app/Articles.vue')
       },
       {
-        path: 'Map', // /Home/Map
-        name: 'Map',
+        path: 'Map', // /Main/Map
+        name: '地图查看',
         component: () => import('../components/maps/Map.vue')
       },
       {
-        path: 'Points', // /Home/Points
-        name: 'Points',
+        path: 'Points', // /Main/Points
+        name: '标点管理',
         component: () => import('../components/maps/Points.vue')
       }
     ]

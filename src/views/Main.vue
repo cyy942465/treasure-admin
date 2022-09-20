@@ -8,7 +8,7 @@
         <the-aside></the-aside>
       </el-aside>
       <el-main>
-        
+        <page-header></page-header>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -18,11 +18,13 @@
 <script>
 import TheHeader from '../components/layout/TheHeader.vue';
 import TheAside from '../components/layout/TheAside.vue';
+import PageHeader from '../components/layout/PageHeader.vue';
 
 export default {
   components: { 
     TheHeader,
-    TheAside 
+    TheAside,
+    PageHeader
   }
 
 } 

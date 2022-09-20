@@ -59,7 +59,7 @@ export default {
           // 提交请求
           await this.$store.dispatch('userLogin', actionsPayload);
           // console.log(this.$store.getters['token']);
-          // 页面跳转
+          // 页面跳转 
           if (this.$store.getters['token']) {
             // 有token登录成功，页面跳转
             this.$router.push('/Main');
@@ -98,6 +98,7 @@ export default {
 
 .title-container {
   margin-bottom: 2em;
+  text-align: center;
 }
 
 .submit-button {

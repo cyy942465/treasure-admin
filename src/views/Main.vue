@@ -25,8 +25,10 @@ export default {
     TheHeader,
     TheAside,
     PageHeader
+  },
+  created() {
+    this.$router.replace('/Main/Home');
   }
-
 } 
 </script>
 

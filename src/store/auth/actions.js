@@ -14,5 +14,8 @@ export default {
       // 人为登录失败
       return;
     }
+  },
+  userLogout(context) {
+    context.commit("delUser");
   }
 }

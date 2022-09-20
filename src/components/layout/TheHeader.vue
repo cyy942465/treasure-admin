@@ -5,14 +5,14 @@
       <p>Treasure</p>
     </div>
     <div class="selection-container">
-      <el-dropdown trigger="hover">
+      <el-dropdown trigger="hover" @command="handleCommand">
         <span class="el-dropdown-link">
           我的账号<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>账号信息</el-dropdown-item>
-          <el-dropdown-item>退出登录</el-dropdown-item>
-          <el-dropdown-item>注销账号</el-dropdown-item>
+          <el-dropdown-item command="0">账号信息</el-dropdown-item>
+          <el-dropdown-item command="1">退出登录</el-dropdown-item>
+          <el-dropdown-item command="2">注销账号</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -21,11 +21,29 @@
 
 <script>
 export default {
-
+  methods: {
+    handleCommand(command) {
+      if (command === '0') {
+        this.$router.push("/Main/Home");
+      } else if (command === '1') {
+        this.logout();
+      } else if (command === '2') {
+        this.$message("还未完成，但是我们强烈建议你别这么做！");
+      }
+    },
+    logout() {
+      this.$store.dispatch('userLogout');
+      // console.log(this.$store.getters.token);
+      this.$router.replace('/');
+    }
+  }
 }
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
 .container {
   width: 100%;
   height: 100%;

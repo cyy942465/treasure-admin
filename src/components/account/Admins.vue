@@ -20,64 +20,30 @@
       </el-table-column>
     </el-table> 
     <!-- 修改表单 -->
-    <el-dialog title="修改密码" :visible.sync="updatedFormVisible" >
-      <el-form :model="updateData" label-position="left">
-        <el-form-item label="新密码" prop="newPassword">
-          <el-input 
-          v-model="updateData.newPassword" 
-          placeholder="请输入新密码"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认新密码" prop="confirmPassword">
-          <el-input 
-          v-model="updateData.confirmPassword" 
-          placeholder="请再次输入新密码"
-          ></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="updatedFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updatedFormVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>
+    <update-dialog
+      v-if="updatedFormVisible"
+      :updatedFormVisible="updatedFormVisible"
+      :index="index"
+      :row="row"
+      @close-updateDialog="closeUpdate"
+    ></update-dialog>
     <!-- 添加表单 -->
-    <el-dialog title="添加管理员账号" :visible.sync="addedFormVisible">
-      <el-form :model="addData" label-position="left">
-        <el-form-item label="所有者" prop="owner">
-          <el-input 
-          v-model="addData.owner" 
-          placeholder="请输入所有者"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="账号邮箱" prop="email">
-          <el-input 
-          v-model="addData.email" 
-          placeholder="请输入账号邮箱"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input 
-          v-model="addData.password" 
-          placeholder="请输入密码"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="confirmPassword">
-          <el-input 
-          v-model="addData.confirmPassword" 
-          placeholder="请再次输入密码"
-          ></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="addedFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addedFormVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>
+    <add-dialog
+      v-if="addedFormVisible"
+      :addedFormVisible="addedFormVisible"
+      @close-addDialog="closeAdd"
+    ></add-dialog>
   </div>
 </template>
 
 <script>
+import UpdateDialog from './dialogs/UpdateDialog.vue';
+import AddDialog from './dialogs/AddDialog.vue';
 export default {
+  components: {
+    UpdateDialog,
+    AddDialog
+  },
   data() {
     return {
       tableData: [{ // 用于接收vuex中的数据
@@ -86,33 +52,30 @@ export default {
         email: '123456',
         password: '123456'
       }],
-      updateData: {
-        newPassword: '',
-        confirmPassword: ''
-      },
-      addData: {
-        owner: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      },
       search: '',
       updatedFormVisible: false,
-      addedFormVisible: false
+      addedFormVisible: false,
+      index: '',
+      row: null
     }
   },
   methods: {
     handleEdit(index, row) {
       console.log(index,row);
       this.updatedFormVisible = true;
-      // 获取表单中的数据
-
-      // 发送请求修改数据库中的数据
+      this.index = index;
+      this.row = row;
     },
     handleDelete(index, row) {
       console.log(index, row);
       // 发送del请求从数据库中删除账号
       // vuex中删除并更新tableData
+    },
+    closeUpdate(value) {
+      this.updatedFormVisible = value;
+    },
+    closeAdd(value) {
+      this.addedFormVisible = value;
     }
   }
 }

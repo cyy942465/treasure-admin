@@ -1,7 +1,17 @@
 <template>
   <div class="container">
-    <el-dialog title="修改密码" :visible.sync="visible" :close-on-click-modal="false" :show-close="false">
-      <el-form :model="updateData" label-position="left">
+    <el-dialog 
+      title="修改密码" 
+      :visible.sync="visible" 
+      :close-on-click-modal="false" 
+      :show-close="false"
+    >
+      <el-form 
+        :model="updateData" 
+        label-position="left"
+        ref="updateForm"
+        :rules="rules"  
+      >
         <el-form-item label="新密码" prop="newPassword">
           <el-input 
           v-model="updateData.newPassword" 
@@ -16,8 +26,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="handleCommit">取 消</el-button>
-        <el-button type="primary" @click="handleCommit">确 定</el-button>
+        <el-button @click="closeDialog">取 消</el-button>
+        <el-button type="primary" @click="handleCommit('updateForm')">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -28,10 +38,29 @@ export default {
   props: ['updatedFormVisible', 'index', 'row'],
   emits: ['close-updateDialog'],
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入新密码'));
+      } else if (value !== this.updateData.newPassword) {
+        callback(new Error('两次输入的密码不一致'));
+      } else {
+        callback();
+      }
+    };
     return {
       updateData: {
         newPassword: '',
         confirmPassword: ''
+      },
+      rules: {
+        newPassword: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 15, message: '密码长度6-15位', trigger: 'blur' }
+        ],
+        confirmPassword: [
+          { required: true, message: '请再次输入新密码', trigger: 'blur'},
+          { validator: validatePass, trigger: 'blur' }
+        ]
       },
       visible: false,
       selectedIndex: '',
@@ -39,14 +68,23 @@ export default {
     }
   },
   methods: {
-    handleCommit(event) {
-      // console.log(event);
+    handleCommit(form) {
+      // 发送数据给后台
+        this.$refs[form].validate((valid) => {
+          if (valid) {
+            console.log('commit!');
+            // 发送数据给后台
+            
+            // 关闭对话框
+            this.closeDialog();
+          } else {
+            return;
+          }
+        })
+    },
+    closeDialog() {
       this.visible = false;
       this.$emit('close-updateDialog',this.visible);
-      // 发送数据给后台
-      if (event.target.innerHTML === '确 定') {
-        console.log('commit!')
-      }
     }
   },
   created() {

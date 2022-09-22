@@ -11,10 +11,10 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button
-            type="primary" icon="el-icon-edit" circle
+            type="primary" icon="el-icon-edit" circle size="mini"
             @click="handleEdit(scope.$index, scope.row)"></el-button>
           <el-button
-            type="danger" icon="el-icon-delete" circle
+            type="danger" icon="el-icon-delete" circle size="mini"
             @click="handleDelete(scope.$index, scope.row)"></el-button>
         </template>
       </el-table-column>

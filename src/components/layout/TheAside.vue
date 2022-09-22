@@ -8,25 +8,25 @@
         </el-menu-item>
       </router-link>
 
-      <router-link to="/Main/Data">
-        <el-menu-item index="1">
-            <i class="el-icon-s-data"></i>
-            <span slot="title">流量监控</span>
-        </el-menu-item>
-      </router-link>
-
-      <el-submenu index="2">
+      <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-user-solid"></i>
           <span>账号管理</span>
         </template>
         <router-link to="/Main/Admins">
-          <el-menu-item index="2-1">管理账号</el-menu-item>
+          <el-menu-item index="1-1">管理账号</el-menu-item>
         </router-link>
         <router-link to="/Main/Users">
-          <el-menu-item index="2-2">用户账号</el-menu-item>
+          <el-menu-item index="1-2">用户账号</el-menu-item>
         </router-link>
       </el-submenu>
+
+      <router-link to="/Main/Data">
+        <el-menu-item index="2">
+            <i class="el-icon-s-data"></i>
+            <span slot="title">流量监控</span>
+        </el-menu-item>
+      </router-link>
 
       <el-submenu index="3">
         <template slot="title">

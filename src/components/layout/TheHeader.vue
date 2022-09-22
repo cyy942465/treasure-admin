@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="logo-container">
+    <div class="logo-container" @click="toHome()">
       <img src="../../assets/logo.png">
       <p>Treasure</p>
     </div>
@@ -35,6 +35,9 @@ export default {
       this.$store.dispatch('userLogout');
       // console.log(this.$store.getters.token);
       this.$router.replace('/');
+    },
+    toHome() {
+      this.$router.push('/Main/Home');
     }
   }
 }

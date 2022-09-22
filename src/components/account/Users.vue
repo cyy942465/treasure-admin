@@ -1,11 +1,17 @@
 <template>
   <div class="container">
     <!-- 搜索框 -->
-    
+    <div class="search">
+      <el-input 
+        v-model="search" 
+        placeholder="搜索用户账号"
+        prefix-icon="el-icon-search"
+      ></el-input>
+    </div>
     <!-- 表格 -->
     <el-table
       style="width: 100%"
-      :data="tableData"
+      :data="searchResult"
     >
       <el-table-column label="-" prop="index" align="center" width="20"></el-table-column>
       <el-table-column label="用户账号" prop="email" align="center"></el-table-column>
@@ -35,7 +41,12 @@
       </el-table-column>
     </el-table>
     <!-- 分页栏 -->
-
+    <div class="pagination">
+      <el-pagination
+        layout="prev, pager, next"
+        :total="totalPage">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -55,7 +66,9 @@ export default {
           status: '异常',
           scores: 200
         }
-      ]
+      ],
+      search: '',
+      totalPage: 1
     }
   },
   methods: {
@@ -65,6 +78,13 @@ export default {
     filterTag(value, row) {
       return row.status === value;
     }
+  },
+  computed: {
+    searchResult() {
+      return this.tableData.filter( data => {
+        return !this.search || data.email.includes(this.search);
+      })
+    }
   }
 }
 </script>
@@ -73,5 +93,20 @@ export default {
 .container {
   margin-top: 2em;
   padding-left: 1em;
+}
+
+.search {
+  margin-bottom: 1em;
+}
+
+.el-input {
+  width: 14em;
+}
+
+.pagination {
+  margin-top: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 </style>

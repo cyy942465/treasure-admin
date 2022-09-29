@@ -13,8 +13,9 @@
       style="width: 100%"
       :data="searchResult"
     >
-      <el-table-column label="-" prop="index" align="center" width="20"></el-table-column>
+      <el-table-column label="-" prop="index" align="center" width="40"></el-table-column>
       <el-table-column label="用户账号" prop="email" align="center"></el-table-column>
+      <el-table-column label="用户昵称" prop="username" align="center"></el-table-column>
       <el-table-column 
         label="账号状态" 
         prop="status" 
@@ -44,7 +45,9 @@
     <div class="pagination">
       <el-pagination
         layout="prev, pager, next"
-        :total="totalPage">
+        :total="totalUser"
+        @current-change="changePage"
+        >
       </el-pagination>
     </div>
   </div>
@@ -54,21 +57,8 @@
 export default {
   data() {
     return {
-      tableData: [
-        {
-          index: 1,
-          email: '767516226@qq.com',
-          status: '正常',
-          scores: 100
-        }, {
-          index: 2,
-          email: '123@168.com',
-          status: '异常',
-          scores: 200
-        }
-      ],
+      tableData: [],
       search: '',
-      totalPage: 1
     }
   },
   methods: {
@@ -77,14 +67,45 @@ export default {
     },
     filterTag(value, row) {
       return row.status === value;
+    },
+    changePage(event) { 
+      // event为当前页面的页数
+      console.log(event);
+      this.tableData = 
+        this.$store.getters['users/getUsers']
+        .slice((event - 1) * 10, event * 10 > this.totalUser ? this.totalUser + 1 : event * 10);
     }
   },
   computed: {
     searchResult() {
-      return this.tableData.filter( data => {
-        return !this.search || data.email.includes(this.search);
-      })
+      if (this.search === '') {
+        return this.tableData;
+      } else {
+        return this.$store.getters['users/getUsers'].filter( data => {
+          return !this.search || data.email.includes(this.search);
+        })
+      }
+      // return this.tableData.filter( data => {
+      //   return !this.search || data.email.includes(this.search);
+      // })
+    },
+    totalUser() {
+      if (this.search === '') {
+        return this.$store.getters['users/getUsers'].length;
+      } else {
+        return this.searchResult.length;
+      }
     }
+  },
+  async mounted() {
+    // 获取token
+    const token = this.$store.getters['token'];
+    // console.log('token：' + token);
+    // 发送请求获取用户列表
+    await this.$store.dispatch('users/getUsers',token);
+    // console.log(this.$store.getters['users/getUsers']);
+    // 更新用户列表
+    this.tableData = this.$store.getters['users/getUsers'].slice(0,10);
   }
 }
 </script>

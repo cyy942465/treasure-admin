@@ -9,3 +9,14 @@ export const login = (info) => {
     data: info
   })
 }
+
+// 获取用户信息接口
+export const getUsers = (token) => {
+  return Axios({
+    url: baseUrl + '/user/all',
+    method: 'get',
+    headers: {
+      Authorization: token
+    }
+  })
+}

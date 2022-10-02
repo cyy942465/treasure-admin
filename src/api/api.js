@@ -20,3 +20,14 @@ export const getUsers = (token) => {
     }
   })
 }
+
+// 获取标点列表
+export const getPoints = (token) => {
+  return Axios({
+    url: baseUrl + '/map/all',
+    method: 'get',
+    headers: {
+      Authorization: token
+    }
+  })
+}

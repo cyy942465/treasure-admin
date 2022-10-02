@@ -39,8 +39,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #CFD8DC;
-  box-shadow: 0 1px 2px #CFD8DC;
 }
 
 </style>

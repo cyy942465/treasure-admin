@@ -48,12 +48,17 @@ a {
   text-decoration: none;
 }
 .container {
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 3em
+  padding: 0 3em;
+  border-bottom: 1px solid #CFD8DC;
+  box-shadow: 0 1px 2px #CFD8DC;
+  background-color: white;
+  z-index: 3;
 }
 
 .logo-container {

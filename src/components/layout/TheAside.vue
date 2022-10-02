@@ -75,6 +75,9 @@ a {
   text-align: center;
 }
 .el-menu-vertical-demo {
-  min-height: 91vh;
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  min-height: 92vh;
 }
 </style>

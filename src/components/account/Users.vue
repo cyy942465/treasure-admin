@@ -31,7 +31,7 @@
           >{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="积分" prop="scores" align="center"></el-table-column>
+      <el-table-column label="积分" prop="scores" align="center" sortable></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button 

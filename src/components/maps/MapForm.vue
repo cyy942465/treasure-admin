@@ -1,6 +1,6 @@
 <template>
   <div class="form_container">
-    <el-table :data="tableData" border>
+    <el-table :data="viewData" border>
       <el-table-column label="编号" align="center" prop="id" width="100"></el-table-column>
       <el-table-column label="经度" align="center" prop="lng" width="120"></el-table-column>
       <el-table-column label="纬度" align="center" prop="lat" width="120"></el-table-column>
@@ -29,6 +29,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="pagination_container">
+      <el-pagination
+        layout="prev, pager, next"
+        :total="getDataLen"
+        page-size="5"
+        @current-change="changePage">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -37,6 +45,7 @@ export default {
   props: ['tableData'],
   data() {
     return {
+      viewData: [],
       srcList: []
     }
   },
@@ -63,11 +72,28 @@ export default {
       // 保持srcList中只有一张照片
       this.srcList.pop();
       this.srcList.push(img);
+    },
+    changePage(event) {
+      this.viewData = this.tableData.slice((event - 1) * 5, event * 5 > this.getDataLen ? this.getDataLen + 1 : event * 5);
     }
   },
+  computed: {
+    getDataLen() {
+      console.log(this.tableData.length);
+      return this.tableData.length;
+    }
+  },
+  mounted() {
+    console.log(this.tableData);
+    this.viewData = this.tableData.slice(0, 5 > this.getDataLen ? this.getDataLen : 5 );
+  }
 }
 </script>
 
 <style scoped>
-
+.pagination_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

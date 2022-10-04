@@ -24,7 +24,7 @@
       <router-link to="/Main/Data">
         <el-menu-item index="2">
             <i class="el-icon-s-data"></i>
-            <span slot="title">流量监控</span>
+            <span slot="title">数据监控</span>
         </el-menu-item>
       </router-link>
 

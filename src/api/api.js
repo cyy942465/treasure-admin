@@ -31,3 +31,14 @@ export const getPoints = (token) => {
     }
   })
 }
+
+// 获取文章列表
+export const getArticles = (token) => {
+  return Axios({
+    url: baseUrl + '/essay/all',
+    method: 'get',
+    headers: {
+      Authorization: token
+    }
+  })
+}

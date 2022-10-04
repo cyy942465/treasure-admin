@@ -33,7 +33,7 @@
       <el-pagination
         layout="prev, pager, next"
         :total="getDataLen"
-        page-size="5"
+        :page-size="5"
         @current-change="changePage">
       </el-pagination>
     </div>
@@ -46,7 +46,14 @@ export default {
   data() {
     return {
       viewData: [],
-      srcList: []
+      srcList: [],
+    }
+  },
+  watch: {
+    // 用于初始化视图
+    tableData(newValue, oldValue) {
+      console.log(newValue,oldValue);
+      this.viewData = newValue.slice(0,5);
     }
   },
   methods: {
@@ -79,14 +86,10 @@ export default {
   },
   computed: {
     getDataLen() {
-      console.log(this.tableData.length);
+      // console.log(this.tableData.length);
       return this.tableData.length;
     }
   },
-  mounted() {
-    console.log(this.tableData);
-    this.viewData = this.tableData.slice(0, 5 > this.getDataLen ? this.getDataLen : 5 );
-  }
 }
 </script>
 

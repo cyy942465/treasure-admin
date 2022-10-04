@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import authModule from './auth/index.js';
 import usersModule from './users/index.js';
 import mapsModule from './maps/index.js';
+import articlesModule from './articles/index.js';
 
 Vue.use(Vuex)
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
   modules: {
     auth: authModule,
     users: usersModule,
-    points: mapsModule 
+    points: mapsModule,
+    articles: articlesModule 
   },
 })

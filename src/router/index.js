@@ -35,7 +35,7 @@ const routes = [
       },
       {
         path: 'Data', // /Main/Data
-        name: '流量监控',
+        name: '数据监控',
         meta: { requiresAuth: true },
         component: () => import('../components/data/Data.vue')
       },

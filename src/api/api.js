@@ -42,3 +42,14 @@ export const getArticles = (token) => {
     }
   })
 }
+
+// 获取商品列表
+export const getGoods = (token) => {
+  return Axios({
+    url: baseUrl + '/goods/all',
+    method: 'get',
+    headers: {
+      Authorization: token
+    }
+  })
+}

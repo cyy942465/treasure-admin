@@ -53,3 +53,14 @@ export const getGoods = (token) => {
     }
   })
 }
+
+// 获取订单列表
+export const getOrders = (token) => {
+  return Axios({
+    url: baseUrl + '/order/all',
+    method: 'get',
+    headers: {
+      Authorization: token
+    }
+  })
+}

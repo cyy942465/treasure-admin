@@ -1,6 +1,6 @@
 <template>
   <div class="form_container">
-    <el-table :data="viewData" border max-height="500">
+    <el-table :data="filterData" border max-height="500">
       <el-table-column label="订单编号" align="center" prop="id" width="80" fixed="left"></el-table-column>
       <el-table-column label="商品名" align="center" prop="goodsName" width="150"></el-table-column>
       <el-table-column label="下单邮箱" align="center" prop="email" width="180"></el-table-column>
@@ -27,14 +27,23 @@ export default {
   props: ['viewData','search'],
   data() {
     return {
+      filterData: []
     }
   },
-  computed: {
-    viewResult() {
-      return this.viewResult.filter( value => {
-        return !this.search || value.id == this.search;
-      });
+  watch: {
+    search(value) {
+      if (value === '') {
+        this.filterData = this.viewData;
+      } else {
+        // console.log(value);
+        this.filterData = this.viewData.filter( data => {
+          return !value || data.id == value;
+        })
+      }
     }
+  },
+  mounted() {
+    this.filterData = this.viewData;
   }
 }
 </script>

@@ -28,7 +28,6 @@
 import OrdersList from './OrdersList.vue';
 export default {
   components: { OrdersList },
-  comments: ['OrdersList'],
   data() {
     return {
       activeName: 'first',

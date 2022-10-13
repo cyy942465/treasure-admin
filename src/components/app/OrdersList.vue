@@ -17,7 +17,22 @@
         </template>
       </el-table-column>
       <el-table-column label="发货时间" align="center" prop="exchangeTime" width="120"></el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" width="80"></el-table-column>
+      <el-table-column label="操作" align="center" fixed="right" width="150">
+        <template slot-scope="scope">
+          <el-button
+            type="primary" icon="el-icon-edit" circle size="small"
+            @click="handleEdit(scope.$index,scope.row)"
+          ></el-button>
+          <el-button type="success" icon="el-icon-sell" circle size="small"
+            @click="handleSend(scope.$index,scope.row)"
+            v-if="scope.row.status === 0"
+          ></el-button>
+          <el-button
+            type="danger" icon="el-icon-delete" circle size="small"
+            @click="handleDelete(scope.$index,scope.row)"
+          ></el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -31,6 +46,9 @@ export default {
     }
   },
   watch: {
+    viewData(value) {
+      this.filterData = value;
+    },
     search(value) {
       if (value === '') {
         this.filterData = this.viewData;
@@ -42,8 +60,13 @@ export default {
       }
     }
   },
-  mounted() {
-    this.filterData = this.viewData;
+  methods: {
+    handleDelete(index,row) {
+      console.log(index,row);
+    },
+    handleEdit(index,row) {
+      console.log(index,row);
+    }
   }
 }
 </script>

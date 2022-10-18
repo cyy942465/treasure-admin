@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-dialog title="添加管理员账号" :visible.sync="visible" :close-on-click-modal="false" :show-close="false">
-      <el-form :model="addData" label-position="left" :rules="rules" ref="addForm">
+      <el-form :model="addData" label-position="left" :rules="rules" ref="addForm" label-width="100px">
         <el-form-item label="所有者" prop="owner">
           <el-input 
           v-model="addData.owner" 
@@ -101,3 +101,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.el-dialog__body {
+  padding: 30px 50px;
+}
+</style>

@@ -3,7 +3,21 @@
     <!-- 控制栏 -->
     <div class="controller">
       <!-- 添加 -->
-      <el-button icon="el-icon-plus">添加文章</el-button>
+      <el-button icon="el-icon-plus" @click="dialogVisible = true">添加文章</el-button>
+      <!-- 对话框（添加） -->
+      <el-dialog title="添加文章信息" :visible.sync="dialogVisible" width="50%" center>
+        <div class="form_container">
+          <el-form :model="addData">
+            <el-form-item label="文章编号" prop="id">
+              <el-input placeholder="请输入文章编号" v-model="addData.id"></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary">确 定</el-button>
+        </span>
+      </el-dialog>
       <!-- 搜索框 -->
       <el-input 
         v-model="search" 
@@ -29,6 +43,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页 -->
+    <div class="pagination">
+      <el-pagination
+        layout="prev, pager, next"
+        :total="totalArticles"
+        @current-change="changePage"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -37,12 +59,39 @@ export default {
   data() {
     return {
       tableData: [],
-      search: ''
+      search: '',
+      dialogVisible: false,
+      addData: {
+        id: '',
+        title: '',
+        author: ''
+      }
     }
   },
   methods: {
     handleDelete(index,row) {
       console.log(index,row);
+      // 确认删除
+      this.$confirm('此操作将永久删除该文章','提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // vuex中发送del请求删除并更新tableData
+        this.$message({
+          type: 'success',
+          message: '删除成功！'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消删除!'
+        });
+      });
+    },
+    changePage(event) {
+      this.tableData = this.$store.getters['articles/getArticlesList']
+        .slice((event - 1) * 10, event * 10);
     }
   },
   computed: {
@@ -54,6 +103,9 @@ export default {
           return !this.search || data.title.includes(this.search);
         })
       }
+    },
+    totalArticles() {
+      return this.tableData.length;
     }
   },
   async mounted() {
@@ -80,5 +132,20 @@ export default {
 }
 .search_input {
   width: 20em;
+}
+
+.pagination {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form_container {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

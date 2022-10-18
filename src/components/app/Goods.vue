@@ -45,7 +45,14 @@
       </el-table>
     </div>
     <!-- 分页 -->
-    
+    <div class="pagination">
+      <el-pagination
+        layout="prev,pager,next"
+        :page-size="5"
+        :total="totalGoods"
+        @current-change="changePage"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -65,9 +72,30 @@ export default {
     },
     handleDelete(index,row) {
       console.log(index,row);
+      // 确认删除
+      this.$confirm('此操作将永久删除该商品','提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // vuex中发送del请求删除并更新tableData
+        this.$message({
+          type: 'success',
+          message: '删除成功！'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消删除!'
+        });
+      });
     },
     handleEdit(index,row) {
       console.log(index,row);
+    },
+    changePage(event) {
+      // console.log(event);
+      this.tableData = this.$store.getters['goods/getGoods'].slice((event - 1) * 5, event * 5);
     }
   },
   computed: {
@@ -79,6 +107,9 @@ export default {
           return !this.search || value.name.includes(this.search);
         } )
       }
+    },
+    totalGoods() {
+      return this.$store.getters['goods/getTotal'];
     }
   },
   async mounted() {
@@ -88,7 +119,7 @@ export default {
     await this.$store.dispatch('goods/getGoodsList', token);
     // 设置列表
     // console.log(this.$store.getters['goods/getGoods']);
-    this.tableData = this.$store.getters['goods/getGoods'].slice();
+    this.tableData = this.$store.getters['goods/getGoods'].slice(0,5);
   }
 }
 </script>
@@ -107,5 +138,12 @@ export default {
 
 .search_input {
   width: 20em;
+}
+
+.pagination {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

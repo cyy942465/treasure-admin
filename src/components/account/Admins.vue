@@ -68,8 +68,23 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
-      // 发送del请求从数据库中删除账号
-      // vuex中删除并更新tableData
+      // 确认删除
+      this.$confirm('此操作将永久删除该账号','提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // vuex中发送del请求删除并更新tableData
+        this.$message({
+          type: 'success',
+          message: '删除成功！'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消删除!'
+        });
+      });
     },
     closeUpdate(value) {
       this.updatedFormVisible = value;

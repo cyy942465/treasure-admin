@@ -25,7 +25,7 @@
         <template slot-scope="scope">
           <el-button type="success" v-if="scope.row.status === 0">通过</el-button>
           <el-button type="primary" v-if="scope.row.status === 0">不通过</el-button>
-          <el-button type="danger">删除</el-button>
+          <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -82,6 +82,26 @@ export default {
     },
     changePage(event) {
       this.viewData = this.tableData.slice((event - 1) * 5, event * 5 > this.getDataLen ? this.getDataLen + 1 : event * 5);
+    },
+    handleDelete(index, row) {
+      console.log(index,row);
+      // 确认删除
+      this.$confirm('此操作将永久删除该地点','提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // vuex中发送del请求删除并更新tableData
+        this.$message({
+          type: 'success',
+          message: '删除成功！'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消删除!'
+        });
+      });
     }
   },
   computed: {

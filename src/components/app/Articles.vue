@@ -3,21 +3,7 @@
     <!-- 控制栏 -->
     <div class="controller">
       <!-- 添加 -->
-      <el-button icon="el-icon-plus" @click="dialogVisible = true">添加文章</el-button>
-      <!-- 对话框（添加） -->
-      <el-dialog title="添加文章信息" :visible.sync="dialogVisible" width="50%" center>
-        <div class="form_container">
-          <el-form :model="addData">
-            <el-form-item label="文章编号" prop="id">
-              <el-input placeholder="请输入文章编号" v-model="addData.id"></el-input>
-            </el-form-item>
-          </el-form>
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary">确 定</el-button>
-        </span>
-      </el-dialog>
+      <el-button icon="el-icon-plus" @click="addDialogVisible = true">添加文章</el-button>
       <!-- 搜索框 -->
       <el-input 
         v-model="search" 
@@ -37,6 +23,10 @@
       <el-table-column label="操作" width="152" align="center">
         <template slot-scope="scope">
           <el-button
+            type="primary" icon="el-icon-edit" circle size="small"
+            @click="handleEdit(scope.$index,scope.row)"
+          ></el-button>
+          <el-button
             type="danger" icon="el-icon-delete" circle size="small"
             @click="handleDelete(scope.$index,scope.row)"
           ></el-button>
@@ -51,18 +41,37 @@
         @current-change="changePage"
       ></el-pagination>
     </div>
+    <!-- 对话框 -->
+    <!-- 添加对话框 -->
+    <add-articles
+      :addDialogVisible="addDialogVisible"
+      @close-addArticles="closeAddArticles"
+    ></add-articles>
+    <!-- 编辑对话框 -->
+    <edit-articles
+      :editDialogVisible="editDialogVisible"
+      :editMessage="editMessage"
+      @close-editArticles="closeEditArticles"
+    ></edit-articles>
   </div>
 </template>
 
 <script>
+import AddArticles from './dialogs/AddArticles.vue';
+import EditArticles from './dialogs/EditArticles.vue';
 export default {
+  components: {
+    AddArticles,
+    EditArticles
+  },
   data() {
     return {
       tableData: [],
       search: '',
-      dialogVisible: false,
-      addData: {
-        id: '',
+      addDialogVisible: false,
+      editDialogVisible: false,
+      editMessage: {
+        id: null,
         title: '',
         author: ''
       }
@@ -89,9 +98,23 @@ export default {
         });
       });
     },
+    handleEdit(index, row) {
+      console.log(index, row);
+      this.editMessage.id = index; // 用于索引state中的数据
+      this.editMessage.title = row.title;
+      this.editMessage.author = row.author;
+      console.log(this.editMessage);
+      this.editDialogVisible = true;
+    },  
     changePage(event) {
       this.tableData = this.$store.getters['articles/getArticlesList']
         .slice((event - 1) * 10, event * 10);
+    },
+    closeAddArticles(value) {
+      this.addDialogVisible = value;
+    },
+    closeEditArticles(value) {
+      this.editDialogVisible = value;
     }
   },
   computed: {

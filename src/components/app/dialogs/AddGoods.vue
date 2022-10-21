@@ -11,8 +11,15 @@
         <el-input v-model="form.name" placeholder="请输入要添加商品的名称"></el-input>
       </el-form-item>
       <el-form-item label="商品图片：" prop="img">
-        <!-- 留白 -->
-        
+        <!-- 图片提交 -->
+        <el-upload 
+          action="#" 
+          list-type="picture"
+          :on-change="changeImg"
+          :disabled="isUploaded"
+          :auto-upload="false">
+          <i  slot="default" class="el-icon-plus"></i>
+        </el-upload>
       </el-form-item>
       <el-form-item label="商品数目：" prop="number">
         <el-input v-model.number="form.number" placeholder="请输入要添加商品的数量"></el-input>
@@ -35,6 +42,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      isUploaded: false,
       form: {
         name: '',
         img: '',
@@ -57,6 +65,11 @@ export default {
   methods: {
     closeDialog() {
       this.$emit('close-addGoods', false);
+    },
+    changeImg(file) {
+      this.form.img = file.url;
+      console.log(this.form.img);
+      this.isUploaded = !this.isUploaded;
     }
   },
   watch: {

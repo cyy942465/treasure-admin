@@ -26,6 +26,7 @@
 <script>
 export default {
   props: ['editDialogVisible','editGood'],
+  emits: ['close-editGoods'],
   data() {
     return {
       dialogVisible: false,

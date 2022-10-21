@@ -3,7 +3,7 @@
     <!-- 控制 -->
     <div class="controller">
       <!-- 添加 -->
-      <el-button icon="el-icon-plus">添加商品</el-button>
+      <el-button icon="el-icon-plus" @click="handleAdd">添加商品</el-button>
       <!-- 搜索框 -->
       <el-input 
         v-model="search" 
@@ -58,13 +58,21 @@
       :editGood="editGood"
       @close-editGoods="closeEditGoods"
     ></edit-goods>
+    <add-goods
+      :addDialogVisible="addDialogVisible"
+      @close-addGoods="closeAddGoods"
+    ></add-goods>
   </div>
 </template>
 
 <script>
 import EditGoods from './dialogs/EditGoods.vue';
+import AddGoods from './dialogs/AddGoods.vue';
 export default {
-  components: { EditGoods },
+  components: { 
+    EditGoods,
+    AddGoods 
+  },
   data() {
     return {
       tableData: [],
@@ -72,12 +80,16 @@ export default {
       search: '',
       editDialogVisible: false,
       editGood: '',
+      addDialogVisible: false
     }
   },
   methods: {
     scaleImage(image) {
       this.srcList.pop();
       this.srcList.push(image);
+    },
+    handleAdd() {
+      this.addDialogVisible = true;
     },
     handleDelete(index,row) {
       console.log(index,row);
@@ -106,6 +118,9 @@ export default {
     },
     closeEditGoods(value) {
       this.editDialogVisible = value;
+    },
+    closeAddGoods(value) {
+      this.addDialogVisible = value;
     },
     changePage(event) {
       // console.log(event);

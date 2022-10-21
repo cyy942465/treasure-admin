@@ -9,7 +9,7 @@
       <el-form-item label="文章标题：" prop="title">
         <el-input v-model="form.title" placeholder="请输入修改后的文章出版社"></el-input>
       </el-form-item>
-      <el-form-item label="文章出版社" prop="author">
+      <el-form-item label="文章出版社：" prop="author">
         <el-input v-model="form.author" placeholder="请输入修改后的文章出版社"></el-input>
       </el-form-item>
     </el-form>

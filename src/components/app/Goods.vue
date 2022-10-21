@@ -53,16 +53,25 @@
         @current-change="changePage"
       ></el-pagination>
     </div>
+    <edit-goods
+      :editDialogVisible="editDialogVisible"
+      :editGood="editGood"
+      @close-editGoods="closeEditGoods"
+    ></edit-goods>
   </div>
 </template>
 
 <script>
+import EditGoods from './dialogs/EditGoods.vue';
 export default {
+  components: { EditGoods },
   data() {
     return {
       tableData: [],
       srcList: [],
-      search: ''
+      search: '',
+      editDialogVisible: false,
+      editGood: '',
     }
   },
   methods: {
@@ -92,6 +101,11 @@ export default {
     },
     handleEdit(index,row) {
       console.log(index,row);
+      this.editDialogVisible = true;
+      this.editGood = row.name;
+    },
+    closeEditGoods(value) {
+      this.editDialogVisible = value;
     },
     changePage(event) {
       // console.log(event);

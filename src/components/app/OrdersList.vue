@@ -34,15 +34,32 @@
         </template>
       </el-table-column>
     </el-table>
+    <edit-order
+      :editDialogVisible="editDialogVisible"
+      @close-editOrder="closeEditOrder"
+      :orderInfo="orderInfo"
+    ></edit-order>
   </div>
 </template>
 
 <script>
+import EditOrder from './dialogs/EditOrder.vue';
 export default {
+  components: {
+    EditOrder
+  },
   props: ['viewData','search'],
   data() {
     return {
-      filterData: []
+      filterData: [],
+      editDialogVisible: false,
+      orderInfo: {
+        id: '',
+        name: '',
+        province: '',
+        city: '',
+        addr: ''
+      }
     }
   },
   watch: {
@@ -83,6 +100,12 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index,row);
+      this.orderInfo.id = row.id;
+      this.orderInfo.goodsName = row.goodsName;
+      this.orderInfo.province = row.province;
+      this.orderInfo.city = row.city;
+      this.orderInfo.addr = row.addr;
+      this.editDialogVisible = true;
     },
     handleSend(index, row) {
       console.log(index, row);
@@ -103,6 +126,9 @@ export default {
           message: '取消发货!'
         });
       });
+    },
+    closeEditOrder(value) {
+      this.editDialogVisible = value;
     }
   }
 }

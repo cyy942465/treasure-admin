@@ -1,26 +1,26 @@
 <template>
   <div class="container">
-    <el-dialog title="添加管理员账号" :visible.sync="visible" :close-on-click-modal="false" :show-close="false">
-      <el-form :model="addData" label-position="left" :rules="rules" ref="addForm" label-width="100px">
-        <el-form-item label="所有者" prop="owner">
+    <el-dialog title="添加管理员账号" :visible.sync="visible" @close="closeDialog" center width="40%">
+      <el-form :model="addData" label-position="left" :rules="rules" ref="addForm" label-width="120px">
+        <el-form-item label="所有者：" prop="owner">
           <el-input 
           v-model="addData.owner" 
           placeholder="请输入所有者"
           ></el-input>
         </el-form-item>
-        <el-form-item label="账号邮箱" prop="email">
+        <el-form-item label="账号邮箱：" prop="email">
           <el-input 
           v-model="addData.email" 
           placeholder="请输入账号邮箱"
           ></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码：" prop="password">
           <el-input 
           v-model="addData.password" 
           placeholder="请输入密码"
           ></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="confirmPassword">
+        <el-form-item label="确认密码：" prop="confirmPassword">
           <el-input 
           v-model="addData.confirmPassword" 
           placeholder="请再次输入密码"
@@ -28,7 +28,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="closeForm">取 消</el-button>
+        <el-button @click="closeDialog">取 消</el-button>
         <el-button type="primary" @click="handleCommit('addForm')">确 定</el-button>
       </div>
     </el-dialog>
@@ -85,19 +85,20 @@ export default {
           // 发送数据给后台
           
           // 关闭对话框
-          this.closeForm();
+          this.closeDialog();
         } else {
           return;
         }
       })
     },
-    closeForm() {
-      this.visible = false;
-      this.$emit('close-addDialog', this.visible);
+    closeDialog() {
+      this.$emit('close-addDialog', false);
     }
   },
-  created() {
-    this.visible = this.addedFormVisible;
+  watch: {
+    addedFormVisible(value) {
+      this.visible = value;
+    }
   }
 }
 </script>

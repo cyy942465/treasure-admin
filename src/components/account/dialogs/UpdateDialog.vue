@@ -3,22 +3,24 @@
     <el-dialog 
       title="修改密码" 
       :visible.sync="visible" 
-      :close-on-click-modal="false" 
-      :show-close="false"
+      @close="closeDialog"
+      width="30%"
+      center
     >
       <el-form 
         :model="updateData" 
         label-position="left"
+        label-width="120px"
         ref="updateForm"
         :rules="rules"  
       >
-        <el-form-item label="新密码" prop="newPassword">
+        <el-form-item label="新密码：" prop="newPassword">
           <el-input 
           v-model="updateData.newPassword" 
           placeholder="请输入新密码"
           ></el-input>
         </el-form-item>
-        <el-form-item label="确认新密码" prop="confirmPassword">
+        <el-form-item label="确认新密码：" prop="confirmPassword">
           <el-input 
           v-model="updateData.confirmPassword" 
           placeholder="请再次输入新密码"
@@ -84,14 +86,15 @@ export default {
     },
     closeDialog() {
       this.visible = false;
-      this.$emit('close-updateDialog',this.visible);
+      this.$emit('close-updateDialog', false);
     }
   },
-  created() {
-    this.visible = this.updatedFormVisible;
-    this.selectedIndex = this.index;
-    this.selectedRow = this.row;
-    console.log(this.selectedRow);
+  watch: {
+    updatedFormVisible(value) {
+      this.visible = value;
+      this.selectedIndex = this.index;
+      this.selectedRow = this.row;
+    }
   }
 }
 </script>

@@ -21,7 +21,6 @@
     </el-table> 
     <!-- 修改表单 -->
     <update-dialog
-      v-if="updatedFormVisible"
       :updatedFormVisible="updatedFormVisible"
       :index="index"
       :row="row"
@@ -29,7 +28,6 @@
     ></update-dialog>
     <!-- 添加表单 -->
     <add-dialog
-      v-if="addedFormVisible"
       :addedFormVisible="addedFormVisible"
       @close-addDialog="closeAdd"
     ></add-dialog>

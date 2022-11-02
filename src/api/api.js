@@ -1,3 +1,7 @@
+/*
+ * @Author: CYY 767516226@qq.com
+ * @LastEditors: CYY 767516226@qq.com
+ */
 import { Axios } from '../axios/axiosPlugin';
 import { baseUrl } from '../config';
 
@@ -74,5 +78,16 @@ export const editOrders = (token, id, info) => {
       Authorization: token
     },
     data: info
+  })
+}
+
+// 获取识别照片列表
+export const getPhotos = (token) => {
+  return Axios({
+    url: baseUrl + '/trash/all',
+    method: 'get',
+    headers: {
+      Authorization: token
+    }
   })
 }

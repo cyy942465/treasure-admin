@@ -5,7 +5,7 @@
     width="35%"
     center
     @close="closeDialog">
-    <el-form :model="form" label-width="120px" label-position="left" :rules="rules">
+    <el-form :model="form" label-width="120px" label-position="left" :rules="rules" ref="form">
       <el-form-item label="订单编号：" >
         <el-input v-model="form.id" disabled></el-input>
       </el-form-item>
@@ -24,7 +24,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="closeDialog">取 消</el-button>
-      <el-button type="primary" @click="closeDialog">提 交</el-button>
+      <el-button type="primary" @click="commitForm('form')">提 交</el-button>
     </div>
   </el-dialog>
 </template>
@@ -53,12 +53,38 @@ export default {
   methods: {
     closeDialog() {
       this.$emit('close-editOrder', false);
+    },
+    commitForm(form) {
+      this.$refs[form].validate(async (valid) => {
+        if (valid) {
+          console.log("commit");
+          // 发送数据给后台
+          const token = this.$store.getters['token'];
+          const id = this.form.id;
+          const message = {
+            token,
+            id,
+            info: {
+              province: this.form.province,
+              city: this.form.city,
+              addr: this.form.addr
+            }
+          };
+          await this.$store.dispatch('orders/editOrder', message);
+          // 关闭对话框
+          this.closeDialog();
+        } else {
+          this.$message.error('提交失败，请重新提交！')
+          return;
+        }
+      })
     }
   },
   watch: {
     editDialogVisible(value) {
       this.dialogVisible = value;
       this.form = this.orderInfo;
+      console.log(this.form);
     }
   }
 }

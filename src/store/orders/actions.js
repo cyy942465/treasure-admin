@@ -1,4 +1,5 @@
 import { getOrders } from "../../api/api"
+import { editOrders } from "../../api/api";
 
 export default {
   async getOrdersList(context,payload) {
@@ -27,5 +28,11 @@ export default {
     } else {
       return;
     }
+  },
+
+  async editOrder(context, payload) {
+    const response = await editOrders(payload.token, payload.id, payload.info);
+    console.log(response);
+    
   }
 }

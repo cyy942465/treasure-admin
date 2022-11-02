@@ -36,6 +36,18 @@ export const getPoints = (token) => {
   })
 }
 
+// 修改标点状态
+export const editPoints = (token, id, data) => {
+  return Axios({
+    url: baseUrl + '/map/' + id,
+    method: 'put',
+    headers: {
+      Authorization: token
+    },
+    data: data
+  })
+}
+
 // 获取文章列表
 export const getArticles = (token) => {
   return Axios({

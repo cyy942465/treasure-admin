@@ -1,3 +1,7 @@
+<!--
+ * @Author: CYY 767516226@qq.com
+ * @LastEditors: CYY 767516226@qq.com
+-->
 <template>
   <div class="container">
     <el-tabs v-model="activeName" type="card">
@@ -59,7 +63,7 @@ export default {
     // 发送请求
     await this.$store.dispatch('points/getPointsMessage',token);
     // 检验是否成功
-    console.log(this.$store.getters['points/getPointsList']);
+    // console.log(this.$store.getters['points/getPointsList']);
   }
 }
 </script>

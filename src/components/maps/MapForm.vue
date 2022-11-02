@@ -23,8 +23,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="success" v-if="scope.row.status === 0">通过</el-button>
-          <el-button type="primary" v-if="scope.row.status === 0">不通过</el-button>
+          <el-button type="success" v-if="scope.row.status === 0" @click="handleEdit(scope.row, 1)">通过</el-button>
+          <el-button type="primary" v-if="scope.row.status === 0" @click="handleEdit(scope.row, 2)">不通过</el-button>
           <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -51,8 +51,8 @@ export default {
   },
   watch: {
     // 用于初始化视图
-    tableData(newValue, oldValue) {
-      console.log(newValue,oldValue);
+    tableData(newValue) {
+      // console.log(newValue,oldValue);
       this.viewData = newValue.slice(0,5);
     }
   },
@@ -82,6 +82,32 @@ export default {
     },
     changePage(event) {
       this.viewData = this.tableData.slice((event - 1) * 5, event * 5 > this.getDataLen ? this.getDataLen + 1 : event * 5);
+    },
+    handleEdit(row, status) {
+      console.log(row);
+      this.$confirm('你确定要修改当前标点的状态吗','确认', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then( async () => {
+        // 调用vuex中的actions发送请求修改本地数据
+        const token = this.$store.getters['token'];
+        const id = row.id;
+        const payload = {
+          token,
+          id,
+          data: {
+            status: status
+          }
+        };
+        // console.log(payload);
+        await this.$store.dispatch('points/changePointsStatus', payload);
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消审核！'
+        })
+      })
     },
     handleDelete(index, row) {
       console.log(index,row);

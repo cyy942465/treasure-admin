@@ -10,8 +10,8 @@ export default {
   // 用于修改标点的状态
   changePoints(state, payload) {
     const index = state.points.findIndex( point => point.id === payload.id);
-    console.log(index);
+    // console.log(index);
     state.points[index].status = payload.status;
-    console.log(state.points);
+    // console.log(state.points);
   }
 }

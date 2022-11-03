@@ -82,14 +82,14 @@ export const getOrders = (token) => {
 }
 
 // 修改订单
-export const editOrders = (token, id, info) => {
+export const editOrders = (token, id, data) => {
   return Axios({
     url: baseUrl + '/order/' + id,
     method: 'put',
     headers: {
       Authorization: token
     },
-    data: info
+    data: data
   })
 }
 

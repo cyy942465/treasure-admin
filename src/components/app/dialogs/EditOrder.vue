@@ -1,3 +1,7 @@
+<!--
+ * @Author: CYY 767516226@qq.com
+ * @LastEditors: CYY 767516226@qq.com
+-->
 <template>
   <el-dialog
     title="修改订单地址"
@@ -11,6 +15,12 @@
       </el-form-item>
       <el-form-item label="商品名称：">
         <el-input v-model="form.goodsName" disabled></el-input>
+      </el-form-item>
+      <el-form-item label="性名：" prop="name">
+        <el-input v-model="form.name" placeholder="请输入收件人性名"></el-input>
+      </el-form-item>
+      <el-form-item label="电话：" prop="phone">
+        <el-input v-model="form.phone" placeholder="请输入收件人电话"></el-input>
       </el-form-item>
       <el-form-item label="省份：" prop="province">
         <el-input v-model="form.province" placeholder="请输入修改后的省份"></el-input>
@@ -39,11 +49,15 @@ export default {
       form: {
         id: null,
         goodsName: '',
+        name: '',
+        phone: '',
         province: '',
         city: '',
         addr: ''
       },
       rules: {
+        name: [{ required: true, message: '订单的收件人不能为空！', trigger: 'blur' }],
+        phone: [{ required: true, message: '订单的收件人电话不能为空！', trigger: 'blur' }],
         province: [{ required: true, message: '订单所在省份不能为空！', trigger: 'blur'}],
         city: [{ required: true, message: '订单所在城市不能为空！', trigger: 'blur' }],
         addr: [{ required: true, message: '订单所在详细地址不能为空！', trigger: 'blur' }]
@@ -61,16 +75,18 @@ export default {
           // 发送数据给后台
           const token = this.$store.getters['token'];
           const id = this.form.id;
-          const message = {
+          const payload = {
             token,
             id,
-            info: {
+            data: {
+              name: this.form.name,
+              phone: this.form.phone,
               province: this.form.province,
               city: this.form.city,
               addr: this.form.addr
             }
           };
-          await this.$store.dispatch('orders/editOrder', message);
+          await this.$store.dispatch('orders/changeOrdersMessage', payload);
           // 关闭对话框
           this.closeDialog();
         } else {

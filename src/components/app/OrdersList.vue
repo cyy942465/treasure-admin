@@ -55,7 +55,9 @@ export default {
       editDialogVisible: false,
       orderInfo: {
         id: '',
+        goodsName: '',
         name: '',
+        phone: '',
         province: '',
         city: '',
         addr: ''
@@ -64,6 +66,7 @@ export default {
   },
   watch: {
     viewData(value) {
+      console.log('change');
       this.filterData = value;
     },
     search(value) {
@@ -102,6 +105,8 @@ export default {
       console.log(index,row);
       this.orderInfo.id = row.id;
       this.orderInfo.goodsName = row.goodsName;
+      this.orderInfo.name = row.name;
+      this.orderInfo.phone = row.phone;
       this.orderInfo.province = row.province;
       this.orderInfo.city = row.city;
       this.orderInfo.addr = row.addr;

@@ -1,3 +1,7 @@
+<!--
+ * @Author: CYY 767516226@qq.com
+ * @LastEditors: CYY 767516226@qq.com
+-->
 <template>
   <div class="container">
     <div class="controller">
@@ -31,26 +35,25 @@ export default {
   data() {
     return {
       activeName: 'first',
-      ordersList: [],
       search: ''
     }
   },
   computed: {
     getAll() {
-      return this.ordersList;
+      return this.$store.getters['orders/getOrders'];
     },
     getUnSend() {
-      return this.ordersList.filter( order => {
+      return this.$store.getters['orders/getOrders'].filter( order => {
         return order.status === 0;
       });
     },
     getSended() {
-      return this.ordersList.filter( order => {
+      return this.$store.getters['orders/getOrders'].filter( order => {
         return order.status === 1;
       })
     },
     getArrived() {
-      return this.ordersList.filter( order => {
+      return this.$store.getters['orders/getOrders'].filter( order => {
         return order.status === 2;
       })
     }
@@ -61,7 +64,6 @@ export default {
     // 发送请求获取订单列表
     await this.$store.dispatch('orders/getOrdersList', token);
     //console.log(this.$store.getters['orders/getOrders']);
-    this.ordersList = this.$store.getters['orders/getOrders'].slice();
   }
 }
 </script>

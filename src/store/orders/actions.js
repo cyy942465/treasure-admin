@@ -1,3 +1,7 @@
+/*
+ * @Author: CYY 767516226@qq.com
+ * @LastEditors: CYY 767516226@qq.com
+ */
 import { getOrders } from "../../api/api"
 import { editOrders } from "../../api/api";
 
@@ -30,9 +34,14 @@ export default {
     }
   },
 
-  async editOrder(context, payload) {
-    const response = await editOrders(payload.token, payload.id, payload.info);
+  async changeOrdersMessage(context, payload) {
+    const response = await editOrders(payload.token, payload.id, payload.data);
     console.log(response);
-    
+    if (response.data.code === '200') {
+      // 修改本地程序中的数据
+      const changeMessage = payload.data;
+      changeMessage.id = payload.id;
+      context.commit('changeOrders', changeMessage);
+    }
   }
 }

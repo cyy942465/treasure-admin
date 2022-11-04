@@ -104,6 +104,17 @@ export const passOrders = (token, id) => {
   })
 }
 
+//删除订单
+export const deleteOrders = (token, id) => {
+  return Axios({
+    url: baseUrl + '/order/' + id,
+    method: 'delete',
+    headers: {
+      Authorization: token
+    }
+  })
+}
+
 // 获取识别照片列表
 export const getPhotos = (token) => {
   return Axios({

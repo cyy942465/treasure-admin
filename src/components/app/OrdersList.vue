@@ -88,8 +88,15 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
+      }).then(async () => {
         // vuex中发送del请求删除并更新tableData
+        const token = this.$store.getters['token'];
+        const id = row.id;
+        const payload = {
+          token,
+          id
+        };
+        await this.$store.dispatch('orders/deleteOrder', payload);
         this.$message({
           type: 'success',
           message: '删除成功！'
@@ -135,7 +142,7 @@ export default {
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '取消发货!'
+          message: '发货失败!'
         });
       });
     },

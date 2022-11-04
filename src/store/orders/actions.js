@@ -5,6 +5,7 @@
 import { getOrders } from "../../api/api"
 import { editOrders } from "../../api/api";
 import { passOrders } from "../../api/api";
+import { deleteOrders } from "../../api/api";
 
 export default {
   async getOrdersList(context,payload) {
@@ -43,6 +44,8 @@ export default {
       const changeMessage = payload.data;
       changeMessage.id = payload.id;
       context.commit('changeOrders', changeMessage);
+    } else {
+      return;
     }
   },
 
@@ -55,6 +58,18 @@ export default {
         status: 1
       };
       context.commit('changeOrdersStatus', changeMessage);
+    } else {
+      return;
+    }
+  },
+
+  async deleteOrder(context,payload) {
+    const response = await deleteOrders(payload.token, payload.id);
+    console.log(response);
+    if (response.data.code === '200') {
+      context.commit('deleteOrders', payload.id);
+    } else {
+      return;
     }
   }
 }

@@ -17,7 +17,13 @@ export default {
     console.log(state.orders);
   },
   changeOrdersStatus(state, payload) {
+    // 改变应用程序中的订单状态
     const index = state.orders.findIndex( order => order.id === payload.id);
     state.orders[index].status = payload.status;
+  },
+  deleteOrders(state, payload) {
+    // 删除应用程序中的订单
+    const index = state.orders.findIndex( order => order.id === payload);
+    state.orders.splice(index, 1);
   }
 }

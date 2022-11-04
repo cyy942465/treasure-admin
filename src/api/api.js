@@ -93,6 +93,17 @@ export const editOrders = (token, id, data) => {
   })
 }
 
+// 发货
+export const passOrders = (token, id) => {
+  return Axios({
+    url: baseUrl + '/order/' + id,
+    method: 'post',
+    headers: {
+      Authorization: token
+    }
+  })
+}
+
 // 获取识别照片列表
 export const getPhotos = (token) => {
   return Axios({

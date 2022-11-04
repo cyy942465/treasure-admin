@@ -114,13 +114,20 @@ export default {
     },
     handleSend(index, row) {
       console.log(index, row);
-      // 确认删除
+      // 确认
       this.$confirm('确认发货吗？','提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        // vuex中发送del请求删除并更新tableData
+      }).then(async () => {
+        // vuex中发送post请求删除并更新tableData
+        const token = this.$store.getters['token'];
+        const id = row.id;
+        const payload = {
+          token,
+          id
+        };
+        await this.$store.dispatch('orders/changeOrdersStatus', payload);
         this.$message({
           type: 'success',
           message: '发货成功！'

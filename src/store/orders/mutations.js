@@ -15,5 +15,9 @@ export default {
     state.orders[index].phone = payload.phone;
     state.orders[index].province = payload.province;
     console.log(state.orders);
+  },
+  changeOrdersStatus(state, payload) {
+    const index = state.orders.findIndex( order => order.id === payload.id);
+    state.orders[index].status = payload.status;
   }
 }

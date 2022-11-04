@@ -4,6 +4,7 @@
  */
 import { getOrders } from "../../api/api"
 import { editOrders } from "../../api/api";
+import { passOrders } from "../../api/api";
 
 export default {
   async getOrdersList(context,payload) {
@@ -42,6 +43,18 @@ export default {
       const changeMessage = payload.data;
       changeMessage.id = payload.id;
       context.commit('changeOrders', changeMessage);
+    }
+  },
+
+  async changeOrdersStatus(context, payload) {
+    const response = await passOrders(payload.token, payload.id);
+    console.log(response);
+    if (response.data.code === '200') {
+      const changeMessage = {
+        id: payload.id,
+        status: 1
+      };
+      context.commit('changeOrdersStatus', changeMessage);
     }
   }
 }

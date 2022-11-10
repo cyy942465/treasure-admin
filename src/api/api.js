@@ -70,6 +70,18 @@ export const getGoods = (token) => {
   })
 }
 
+// 修改商品
+export const editGoods = (token, data) => {
+  return Axios({
+    url: baseUrl + '/good/change',
+    method: 'put',
+    headers: {
+      Authorization: token
+    },
+    data: data
+  })
+}
+
 // 获取订单列表
 export const getOrders = (token) => {
   return Axios({

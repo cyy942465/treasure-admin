@@ -79,7 +79,10 @@ export default {
       srcList: [],
       search: '',
       editDialogVisible: false,
-      editGood: '',
+      editGood: {
+        name: '',
+        id: null
+      },
       addDialogVisible: false
     }
   },
@@ -114,7 +117,8 @@ export default {
     handleEdit(index,row) {
       console.log(index,row);
       this.editDialogVisible = true;
-      this.editGood = row.name;
+      this.editGood.name = row.name;
+      this.editGood.id = row.id;
     },
     closeEditGoods(value) {
       this.editDialogVisible = value;

@@ -1,3 +1,7 @@
+<!--
+ * @Author: CYY 767516226@qq.com
+ * @LastEditors: CYY 767516226@qq.com
+-->
 <template>
   <el-dialog 
     title="修改商品信息"
@@ -56,7 +60,8 @@ export default {
   watch: {
     editDialogVisible(value) {
       this.dialogVisible = value;
-      this.form.name = this.editGood;
+      this.form.name = this.editGood.name;
+      this.form.id = this.editGood.id;
     }
   }
 }

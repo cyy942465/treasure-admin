@@ -1,4 +1,11 @@
+/*
+ * @Author: CYY 767516226@qq.com
+ * @LastEditors: CYY 767516226@qq.com
+ */
 import { getGoods } from "../../api/api"
+import { editGoods } from "../../api/api"
+import { deleteGood } from "../../api/api";
+import { addGood } from "../../api/api";
 
 export default {
   async getGoodsList(context, payload) {
@@ -22,5 +29,36 @@ export default {
     } else {
       return;
     }
+  },
+
+  async changeGoodInfo(context, payload) {
+    const response = await editGoods(payload.token, payload.data);
+    console.log(response);
+    if (response.data.code === '200') {
+      // 数据处理
+      const changeInfo = {
+        id: payload.data.id,
+        number: payload.data.number,
+        price: payload.data.price
+      }
+      context.commit('changeGoodInfo', changeInfo);
+    } else {
+      return;
+    }
+  },
+
+  async deleteGood(context, payload) {
+    const response = await deleteGood(payload.token, payload.id);
+    console.log(response);
+    if (response.data.code === '200') {
+      context.commit('deleteGood', payload.id);
+    } else {
+      return;
+    }
+  },
+
+  async addGood(context, payload) {
+    const response = await addGood(payload.token, payload.data);
+    console.log(response);
   }
 }

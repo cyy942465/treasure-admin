@@ -73,8 +73,31 @@ export const getGoods = (token) => {
 // 修改商品
 export const editGoods = (token, data) => {
   return Axios({
-    url: baseUrl + '/good/change',
+    url: baseUrl + '/goods/change',
     method: 'put',
+    headers: {
+      Authorization: token
+    },
+    data: data
+  })
+}
+
+// 删除商品
+export const deleteGood = (token, id) => {
+  return Axios({
+    url: baseUrl + '/goods/' + id,
+    method: 'delete',
+    headers: {
+      Authorization: token
+    }
+  })
+}
+
+// 添加商品
+export const addGood = (token, data) => {
+  return Axios({
+    url: baseUrl + '/goods/add',
+    method: 'post',
     headers: {
       Authorization: token
     },

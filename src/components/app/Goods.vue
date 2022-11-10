@@ -75,15 +75,17 @@ export default {
   },
   data() {
     return {
-      tableData: [],
       srcList: [],
       search: '',
       editDialogVisible: false,
       editGood: {
         name: '',
-        id: null
+        id: null,
+        price: 0,
+        number: 0
       },
-      addDialogVisible: false
+      addDialogVisible: false,
+      curPage: 1, // 当前页数
     }
   },
   methods: {
@@ -103,6 +105,13 @@ export default {
         type: 'warning'
       }).then(() => {
         // vuex中发送del请求删除并更新tableData
+        const token = this.$store.getters['token'];
+        const id = row.id;
+        const payload = {
+          token,
+          id
+        }
+        this.$store.dispatch('goods/deleteGood',payload);
         this.$message({
           type: 'success',
           message: '删除成功！'
@@ -119,6 +128,8 @@ export default {
       this.editDialogVisible = true;
       this.editGood.name = row.name;
       this.editGood.id = row.id;
+      this.editGood.price = row.price;
+      this.editGood.number = row.number;
     },
     closeEditGoods(value) {
       this.editDialogVisible = value;
@@ -128,22 +139,22 @@ export default {
     },
     changePage(event) {
       // console.log(event);
-      this.tableData = this.$store.getters['goods/getGoods'].slice((event - 1) * 5, event * 5);
+      this.curPage = event;
     }
   },
   computed: {
     dataResult() {
       if (this.search === '') {
-        return this.tableData;
+        return this.$store.getters['goods/getGoods'].slice((this.curPage - 1) * 5, this.curPage * 5);
       } else {
-        return this.tableData.filter( value => {
+        return this.$store.getters['goods/getGoods'].filter( value => {
           return !this.search || value.name.includes(this.search);
         } )
       }
     },
     totalGoods() {
-      return this.$store.getters['goods/getTotal'];
-    }
+      return this.search === ''? this.$store.getters['goods/getTotal'] : this.dataResult.length;
+    },
   },
   async mounted() {
     // 获取token

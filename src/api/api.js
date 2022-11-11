@@ -59,6 +59,17 @@ export const getArticles = (token) => {
   })
 }
 
+// 删除指定文章
+export const deleteArticle = (token, id) => {
+  return Axios({
+    url: baseUrl + '/essay/' + id,
+    method: 'delete',
+    headers: {
+      Authorization: token
+    }
+  })
+}
+
 // 获取商品列表
 export const getGoods = (token) => {
   return Axios({

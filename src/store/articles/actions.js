@@ -1,4 +1,9 @@
+/*
+ * @Author: CYY 767516226@qq.com
+ * @LastEditors: CYY 767516226@qq.com
+ */
 import { getArticles } from "../../api/api"
+import { deleteArticle } from "../../api/api";
 
 export default {
   async getArticlesMessage(context, payload) {
@@ -14,13 +19,25 @@ export default {
           id: article.id,
           title: article.title,
           author: article.author,
+          content: article.content,
           likeNum: article.likeNum,
           dislikeNum: article.dislikeNum,
-          createTime: article.createTime
+          createTime: article.createTime,
+          imageUrl: article.imageUrl
         });
       }
       // 存储数据
       context.commit('setArticles', payload);
+    } else {
+      return;
+    }
+  },
+
+  async deleteArticle(context, payload) {
+    const response = await deleteArticle(payload.token, payload.id);
+    if (response.data.code === '200') {
+      // 修改本地程序数据
+      context.commit('deleteArticle', payload.id);
     } else {
       return;
     }

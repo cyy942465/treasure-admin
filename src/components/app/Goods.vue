@@ -163,7 +163,6 @@ export default {
     await this.$store.dispatch('goods/getGoodsList', token);
     // 设置列表
     // console.log(this.$store.getters['goods/getGoods']);
-    this.tableData = this.$store.getters['goods/getGoods'].slice(0,5);
   }
 }
 </script>

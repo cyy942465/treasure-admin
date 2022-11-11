@@ -37,6 +37,7 @@
     <div class="pagination">
       <el-pagination
         layout="prev, pager, next"
+        :page-size="10"
         :total="totalArticles"
         @current-change="changePage"
       ></el-pagination>
@@ -66,8 +67,8 @@ export default {
   },
   data() {
     return {
-      tableData: [],
       search: '',
+      curPage: 1, // 当前页面
       addDialogVisible: false,
       editDialogVisible: false,
       editMessage: {
@@ -87,6 +88,13 @@ export default {
         type: 'warning'
       }).then(() => {
         // vuex中发送del请求删除并更新tableData
+        const token = this.$store.getters['token'];
+        const id = row.id;
+        const payload = {
+          token,
+          id
+        }
+        this.$store.dispatch('articles/deleteArticle', payload);
         this.$message({
           type: 'success',
           message: '删除成功！'
@@ -107,8 +115,9 @@ export default {
       this.editDialogVisible = true;
     },  
     changePage(event) {
-      this.tableData = this.$store.getters['articles/getArticlesList']
-        .slice((event - 1) * 10, event * 10);
+      // this.tableData = this.$store.getters['articles/getArticlesList']
+      //   .slice((event - 1) * 10, event * 10);
+      this.curPage = event;
     },
     closeAddArticles(value) {
       this.addDialogVisible = value;
@@ -120,15 +129,15 @@ export default {
   computed: {
     searchResult() {
       if (this.search === '') {
-        return this.tableData;
+        return this.$store.getters['articles/getArticlesList'].slice((this.curPage - 1) * 5, this.curPage * 5);
       } else {
-        return this.tableData.filter( data => {
+        return this.$store.getters['articles/getArticlesList'].filter( data => {
           return !this.search || data.title.includes(this.search);
         })
       }
     },
     totalArticles() {
-      return this.tableData.length;
+      return this.search === '' ? this.$store.getters['articles/getArticlesList'].length : this.searchResult.length;
     }
   },
   async mounted() {
@@ -137,8 +146,6 @@ export default {
     // 发送请求获取文章列表
     await this.$store.dispatch('articles/getArticlesMessage', token);
     // console.log(this.$store.getters['articles/getArticlesList']);
-    // 更新视图
-    this.tableData = this.$store.getters['articles/getArticlesList'];
   }
 }
 </script>

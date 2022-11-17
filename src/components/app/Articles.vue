@@ -3,7 +3,7 @@
     <!-- 控制栏 -->
     <div class="controller">
       <!-- 添加 -->
-      <el-button icon="el-icon-plus" @click="addDialogVisible = true">添加文章</el-button>
+      <el-button icon="el-icon-plus" @click="addArticle">添加文章</el-button>
       <!-- 搜索框 -->
       <el-input 
         v-model="search" 
@@ -42,43 +42,22 @@
         @current-change="changePage"
       ></el-pagination>
     </div>
-    <!-- 对话框 -->
-    <!-- 添加对话框 -->
-    <add-articles
-      :addDialogVisible="addDialogVisible"
-      @close-addArticles="closeAddArticles"
-    ></add-articles>
-    <!-- 编辑对话框 -->
-    <edit-articles
-      :editDialogVisible="editDialogVisible"
-      :editMessage="editMessage"
-      @close-editArticles="closeEditArticles"
-    ></edit-articles>
   </div>
 </template>
 
 <script>
-import AddArticles from './dialogs/AddArticles.vue';
-import EditArticles from './dialogs/EditArticles.vue';
 export default {
-  components: {
-    AddArticles,
-    EditArticles
-  },
   data() {
     return {
       search: '',
       curPage: 1, // 当前页面
-      addDialogVisible: false,
-      editDialogVisible: false,
-      editMessage: {
-        id: null,
-        title: '',
-        author: ''
-      }
     }
   },
   methods: {
+    addArticle() {
+      this.$store.dispatch('articles/changeArticleType', 1);
+      this.$router.push('/Main/AddArticles');
+    },
     handleDelete(index,row) {
       console.log(index,row);
       // 确认删除
@@ -108,11 +87,9 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row);
-      this.editMessage.id = index; // 用于索引state中的数据
-      this.editMessage.title = row.title;
-      this.editMessage.author = row.author;
-      console.log(this.editMessage);
-      this.editDialogVisible = true;
+      this.$store.dispatch('articles/setEditingId', row.id);
+      this.$store.dispatch('articles/changeArticleType', 0);
+      this.$router.push('/Main/EditArticles');
     },  
     changePage(event) {
       // this.tableData = this.$store.getters['articles/getArticlesList']

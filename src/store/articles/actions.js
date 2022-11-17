@@ -4,6 +4,8 @@
  */
 import { getArticles } from "../../api/api"
 import { deleteArticle } from "../../api/api";
+import { addArticle } from "../../api/api";
+import { editArticle } from "../../api/api";
 
 export default {
   async getArticlesMessage(context, payload) {
@@ -41,5 +43,24 @@ export default {
     } else {
       return;
     }
+  },
+
+  changeArticleType(context, payload) {
+    context.commit('changeArticleType', payload);
+  },
+
+  setEditingId(context, payload) {
+    // console.log(payload);
+    context.commit('setEditingId', payload);
+  },
+
+  async addArticle(context, payload) {
+    const response = await addArticle(payload);
+    console.log(response);
+  },
+
+  async editArticle(context, payload) {
+    const response = await editArticle(payload.data, payload.id);
+    console.log(response);
   }
 }

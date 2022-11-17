@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from '../store/index.js';
 
 Vue.use(VueRouter)
 
@@ -67,7 +66,19 @@ const routes = [
         path: 'Articles', // /Main/Articles
         name: '文章管理',
         meta: { requiresAuth: true },
-        component: () => import('../components/app/Articles.vue')
+        component: () => import('../components/app/Articles.vue'),
+      },
+      {
+        path: 'AddArticles', // /Main/AddArticles
+        name: '添加文章',
+        meta: { requiresAuth: true },
+        component: () => import('../components/app/EditArticles.vue')
+      },
+      {
+        path: 'EditArticles', // /Main/EditArticles
+        name: '编辑文章',
+        meta: { requiresAuth: true },
+        component: () => import('../components/app/EditArticles.vue')
       },
       {
         path: 'Map', // /Main/Map
@@ -93,7 +104,7 @@ const router = new VueRouter({
 
 // 设置路由守卫
 router.beforeEach(function(to, from, next) {
-  if (to.meta.requiresAuth && !store.getters.token) {
+  if (to.meta.requiresAuth && !localStorage.getItem('token')) {
     next('/');
   } else {
     next();
